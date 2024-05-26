@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Immediate Ambulance Assistance</title>
+<link rel="stylesheet" href="ambulance.css">
+</head>
+<body>
+<header>
+  <h1>Immediate Ambulance Assistance</h1>
+</header>
+
+<main>
+  <button id="emergencyCallButton" onclick="makeCall()" ><a href="tel:+919818758178">Call Ambulance Now</a></button>
+  <h4>We will be arriving at ur location</h4>
+  <div id="locationDisplay"></div>
+  <div id="stepByStepGuide">
+    <h2>What to do while you wait</h2>
+    <ol>
+      <li>Check the patient's airways and breathing.</li>
+      <li>Attempt first aid if you are trained.</li>
+      <li>Clear the area of any dangers.</li>
+      <li>Comfort and reassure the patient.</li>
+    </ol>
+  </div>
+  <div id="waitTimeEstimator">
+    <h2>Estimated Wait Time: <span id="waitTime">Wait for ambulance...</span></h2>
+  </div>
+</main>
+
+<footer>
+  <p>Contact us: (555) 123-4567</p>
+</footer>
+
+<script src="ambulance.js"></script>
+</body>
+</html>

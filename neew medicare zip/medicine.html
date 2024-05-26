@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dynamic Shopping Cart</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background-color: #1D1D1D;
+        color: #fff;
+    }
+    .item { 
+        margin-bottom: 20px; 
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        background: linear-gradient(to right, #007bff, #004085);
+        text-align: center;
+        transition: background 0.3s, transform 0.3s;
+    }
+    .item:hover {
+        background: linear-gradient(to right, #0056b3, #002752);
+    }
+    button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: #2272FF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    .head{
+        font-size: 2.5rem; 
+    text-align: center; 
+    display: block; 
+    width: 100%; 
+    margin: auto; 
+    margin-bottom: 50px;
+    }
+    button:hover {
+        background-color: #ff69b4;
+    }
+    #cart-summary, #cart-items {
+        background-color: #333;
+        color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+        list-style-type: none;
+        padding: 0;
+    }
+    #notification {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        background-color: red;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        text-align: center;
+        line-height: 20px;
+        font-size: 12px;
+        display: none;
+    }
+    .item-quantity{
+        width: 50px;
+    }
+</style>
+</head>
+<body>
+    <div><h1 class="head">Varied Health Check-up Packages</h1>
+    </div>
+    
+<div class="item">
+    <h2>Paracetamol</h2>
+    <p>For reducing fever and relieving pain.</p>
+    <span>Price- ₹100</span>
+    <input type="number" min="0" data-name="Paracetamol" data-price="100" class="item-quantity">
+</div>
+<div class="item">
+    <h2>Ibuprofen</h2>
+    <p>For treating pain, fever, and inflammation.</p>
+    <span>Price - ₹200</span>
+    <input type="number" min="0" data-name="Ibuprofen" data-price="200" class="item-quantity">
+</div>
+
+<div class="item">
+    <h2>Amoxicillin</h2>
+    <p>Antibiotic used to treat a variety of bacterial infections.</p>
+    <span>Price - ₹10</span>
+    <input type="number" min="0" data-name="Amoxicillin" data-price="10" class="item-quantity">
+</div>
+
+<!-- Add more items as required -->
+
+<div class="item">
+    <h2>Metformin</h2>
+    <p>For managing type 2 diabetes.</p>
+    <span>Price - ₹7</span>
+    <input type="number" min="0" data-name="Metformin" data-price="7" class="item-quantity">
+</div>
+
+<div class="item">
+    <h2>Lisinopril</h2>
+    <p>For treating high blood pressure and heart failure.</p>
+    <span>Price - ₹6</span>
+    <input type="number" min="0" data-name="Lisinopril" data-price="6" class="item-quantity">
+</div>
+
+<div class="item">
+    <h2>Simvastatin</h2>
+    <p>For lowering cholesterol and reducing risk of heart disease.</p>
+    <span>Price - ₹15</span>
+    <input type="number" min="0" data-name="Simvastatin" data-price="15" class="item-quantity">
+</div>
+<button onclick="updateCart()">Add to Cart</button>
+<button type="button" onclick="Purchase()">Purchase</button>
+<div id="notification"></div>
+<ul id="cart-items"></ul>
+<div id="cart-summary">Total: <span id="cart-total"></span></div>
+
+<script>
+let cart = [];
+function Purchase(){
+    location.href='index.html';
+    alert("items purchased");
+}
+
+function updateCart() {
+    const cartItemsList = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    const notification = document.getElementById('notification');
+
+    let total = 0;
+    cartItemsList.innerHTML = ''; 
+    cart.forEach(item => {
+        total += item.price * item.quantity;
+        const itemElement = document.createElement('li');
+        itemElement.textContent = `${item.name} - ₹${item.price} x ${item.quantity}`;
+        cartItemsList.appendChild(itemElement);
+    });
+    cartTotal.textContent = '₹' + total;
+    notification.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+    notification.style.display = cart.length > 0 ? 'block' : 'none';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.item-quantity').forEach(input => {
+        input.addEventListener('change', function() {
+            const itemName = this.getAttribute('data-name');
+            const itemPrice = parseInt(this.getAttribute('data-price'), 10);
+            const itemQuantity = parseInt(this.value, 10) || 0;
+
+            const existingItem = cart.find(item => item.name === itemName);
+            if (existingItem) {
+                existingItem.quantity = itemQuantity;
+                if (itemQuantity === 0) { 
+                    cart = cart.filter(item => item.name !== itemName);
+                }
+            } else if (itemQuantity > 0) {
+                cart.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+            }
+        });
+    });
+});
+
+</script>
+</body>
+</html>

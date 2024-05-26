@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Check-up Packages</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #1D1D1D;
+            color: #fff;
+        }
+        .package {
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 5px;
+            color: #fff;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+            background: linear-gradient(to right, #007bff, #004085);
+            text-align: center; 
+            transition: background 0.3s, transform 0.3s;
+        }
+        .package:hover {
+            background: linear-gradient(to right, #0056b3, #002752); 
+        }
+        
+        .head {
+            font-size: 2.5rem; 
+            text-align: center;
+            display: block; 
+            width: 100%; 
+            margin: auto;
+            margin-bottom: 50px;
+        }
+
+        .package h2 {
+            color: #ffffff;
+        }
+
+        .package p {
+            color: #e6e6e6;
+        }
+
+        .package label {
+            display: block;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .package input[type="checkbox"] {
+            margin-right: 10px;
+            accent-color: #2272FF;
+        }
+
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 10px;
+            background-color: #2272FF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button1 {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin-right: 100px;
+            background-color: #2272FF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #ff69b4;
+        }
+
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #1D1D1D;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            margin-bottom: 5px;
+        }
+        .heading{
+            position: st;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        #cart-button {
+            position: relative;
+            margin: 10px;
+        }
+
+        #notification {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: red;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            line-height: 20px;
+            font-size: 12px;
+            display: none; 
+        }
+
+        #cart-summary {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            display: none;
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+        .packagecontainer{
+            padding-top: 175px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="header"><div class="heading">
+        <h1 class="head">Varied Health Check-up Packages</h1>
+        <div id="cart-button">
+            <button class="button" type="button" onclick="toggleCartDisplay()">Cart</button>
+            <div id="notification">0</div>
+        </div>
+        <button class="button1" type="button" onclick="Purchase()">Purchase</button>
+</div>
+         <div id="cart-summary">
+            <h2>Your Selected Packages</h2>
+            <ul id="cart-items"></ul>
+            <p><strong>Total: ₹<span id="cart-total">0</span></strong></p>
+        </div>
+</div>
+    <div class="packagecontainer">
+    <div class="package">
+        <h2>Comprehensive Wellness Exam</h2>
+        <p>This extensive package offers a thorough health evaluation, including blood tests, imaging, and specialist consultations to provide a complete health overview. Price available upon request.</p>
+        <label><input type="checkbox" data-price="20000" data-name="Comprehensive Wellness Exam"> Select this package</label>
+    </div>
+    <div class="package">
+        <h2>Essential Health Screening</h2>
+        <p>Designed for individuals of all ages, this package includes vital health markers such as blood count, cholesterol test, and blood sugar levels. Price: ₹699.</p>
+        <label><input type="checkbox" data-price="699" data-name="Essential Health Screening"> Select this package</label>
+    </div>
+    <div class="package">
+        <h2>Family Health Check</h2>
+        <p>Perfect for families, this plan covers essential tests for adults and children, ensuring all family members maintain optimal health. Price: ₹950.</p>
+        <label><input type="checkbox" data-price="950" data-name="Family Health Check"> Select this package</label>
+    </div>
+    <div class="package">
+        <h2>Senior Care Assessment</h2>
+        <p>Specially tailored for the elderly, this check-up focuses on age-related health issues, including bone density and cardiovascular health. Price: ₹1200.</p>
+        <label><input type="checkbox" data-price="1200" data-name="Senior Care Assessment"> Select this package</label>
+    </div>
+    <div class="package">
+        <h2>Women's Health Package</h2>
+        <p>Includes tests and consultations focused on women's health issues such as breast screening, hormonal balance, and reproductive health. Price: ₹1300.</p>
+        <label><input type="checkbox" data-price="1300" data-name="Women's Health Package"> Select this package</label>
+    </div>
+    <div class="package">
+        <h2>Men's Health Evaluation</h2>
+        <p>This package is designed to address common health concerns in men, including prostate health, testosterone levels, and heart health. Price: ₹1100.</p>
+        <label><input type="checkbox" data-price="1100" data-name="Men's Health Evaluation"> Select this package</label>
+    </div>
+</div>
+
+    <script>
+        let cart = [];
+        function Purchase(){
+            location.href='index.html';
+            alert("item purchased");
+        }
+
+        function toggleCartDisplay() {
+            const cartSummary = document.getElementById('cart-summary');
+            cartSummary.style.display = cartSummary.style.display === 'none' ? 'block' : 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            const notification = document.getElementById('notification');
+            const cartItemsList = document.getElementById('cart-items');
+            const cartTotal = document.getElementById('cart-total');
+
+            function updateCart() {
+                let total = 0;
+                cartItemsList.innerHTML = ''; 
+                cart.forEach(item => {
+                    total += item.price;
+                    const itemElement = document.createElement('li');
+                    itemElement.textContent = `${item.name} - ₹${item.price}`;
+                    cartItemsList.appendChild(itemElement);
+                });
+                cartTotal.textContent = total;
+                notification.textContent = cart.length;
+                notification.style.display = cart.length > 0 ? 'block' : 'none';
+            }
+
+            checkboxes.forEach(box => {
+                box.addEventListener('change', function() {
+                    if (this.checked) {
+                        cart.push({
+                            name: this.getAttribute('data-name'),
+                            price: parseInt(this.getAttribute('data-price'), 10)
+                        });
+                    } else {
+                        cart = cart.filter(item => item.name !== this.getAttribute('data-name'));
+                    }
+                    updateCart();
+                });
+            });
+        });
+    </script>
+</body>
+</html>
